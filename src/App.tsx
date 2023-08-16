@@ -509,7 +509,7 @@ export default function Home() {
                   {contractMetadata.data?.social_urls?.twitter ? (
                     <FontAwesomeIcon icon={faTwitter} />
                   ) : (
-                    "No Twitter"
+                    ""
                   )}
                 </a>
               )}
@@ -518,7 +518,9 @@ export default function Home() {
                   role="status"
                   className="space-y-8 animate-pulse md:flex md:items-center md:space-x-8 md:space-y-0"
                 >
-                  
+                  <div className="w-full">
+                    <div className="w-48 h-8 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                  </div>
                   <span className="sr-only">Loading...</span>
                 </div>
               ) : (
@@ -530,7 +532,7 @@ export default function Home() {
                   {contractMetadata.data?.social_urls?.discord ? (
                     <FontAwesomeIcon icon={faDiscord} />
                   ) : (
-                    "No Discord"
+                    ""
                   )}
                 </a>
               )}
