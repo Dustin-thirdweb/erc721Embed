@@ -1,7 +1,18 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App";
-import { ThirdwebProvider } from "@thirdweb-dev/react";
+import {
+  ThirdwebProvider,
+  ConnectWallet,
+  metamaskWallet,
+  coinbaseWallet,
+  walletConnect,
+  paperWallet,
+  localWallet,
+  trustWallet,
+  magicLink,
+  rainbowWallet,
+} from "@thirdweb-dev/react";
 import "./styles/globals.css";
 import { Toaster } from "./components/ui/Toaster";
 import { getGasless } from "./utils/getGasless";
@@ -11,6 +22,8 @@ import {
   chainConst,
   relayerUrlConst,
   clientIdConst,
+  paperClientIdConst,
+  magicLinkApiKeyConst,
 } from "./consts/parameters";
 
 const container = document.getElementById("root");
@@ -28,9 +41,31 @@ const chain = (urlParams.get("chain") && urlParams.get("chain")?.startsWith("{")
 
 const clientId = urlParams.get("clientId") || clientIdConst || "";
 
+const paperClientId = urlParams.get("paperClientId") || paperClientIdConst ||"";
+
+const magicLinkApiKey = urlParams.get("magicLinkApiKey") || magicLinkApiKeyConst ||"";
+
 root.render(
   <React.StrictMode>
-    <ThirdwebProvider activeChain={chain} sdkOptions={sdkOptions} clientId={clientId}>
+  <ThirdwebProvider
+    clientId={clientId}
+    activeChain={chain} 
+    sdkOptions={sdkOptions}
+    supportedWallets={[
+      metamaskWallet(),
+      coinbaseWallet(),
+      walletConnect(),
+      localWallet(),
+      trustWallet(),
+      paperWallet({
+        paperClientId: paperClientId,
+      }),
+      magicLink({
+        apiKey: magicLinkApiKey,
+      }),
+      rainbowWallet(),
+    ]}
+  >
       <Toaster />
       <App />
     </ThirdwebProvider>
